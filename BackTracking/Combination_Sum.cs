@@ -10,8 +10,6 @@ public class Solution
 
     public void sol(int[] nums, int index, int target, List<int> ls)
     {
-        Console.WriteLine("t: " + target);
-
 
         if (target == 0)
         {
