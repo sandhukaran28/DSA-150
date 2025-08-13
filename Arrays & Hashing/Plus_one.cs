@@ -34,3 +34,25 @@ public class Solution
         return res;
     }
 }
+
+// better solution
+public class Solution
+{
+    public int[] PlusOne(int[] arr)
+    {
+        for (int i = arr.Length - 1; i >= 0; i--)
+        {
+            if (arr[i] != 9)
+            {
+                arr[i]++;
+                return arr;
+            }
+            arr[i] = 0;
+        }
+
+        int[] res = new int[arr.Length + 1];
+        res[0] = 1;
+
+        return res;
+    }
+}
