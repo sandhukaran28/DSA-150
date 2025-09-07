@@ -1,24 +1,32 @@
-public class Solution {
-    public bool IsPalindrome(string s) {
-        int i = 0;
-        int j = s.Length -1;
-        while(i < j){
-            if(!(s[i] >= 'A' && s[i] <= 'Z') && !(s[i] >= 'a' && s[i] <= 'z') && !(s[i] >= '0' && s[i] <= '9')){
-                i++;
-                continue;
-            }
-            if(!(s[j] >= 'A' && s[j] <= 'Z') && !(s[j] >= 'a' && s[j] <= 'z') && !(s[j] >= '0' && s[j] <= '9')){
-                j--;
-                continue;
-            }
+public class Solution
+{
+    public bool IsPalindrome(string s)
+    {
+        int l = 0, r = s.Length - 1;
+        while (l < r)
+        {
+            char left = Char.ToLower(s[l]);
+            char right = Char.ToLower(s[r]);
 
-            if(char.ToLower(s[i]) != char.ToLower(s[j])){
+            if (!((left >= 'a' && left <= 'z') || left >= '0' && left <= '9'))
+            {
+                l++;
+
+                continue;
+            }
+            if (!((right >= 'a' && right <= 'z') || (right >= '0' && right <= '9')))
+            {
+                r--;
+
+                continue;
+            }
+            if (left != right)
+            {
                 return false;
             }
-            else{
-                i++;
-                j--;
-            }
+            l++;
+            r--;
+
         }
 
         return true;
