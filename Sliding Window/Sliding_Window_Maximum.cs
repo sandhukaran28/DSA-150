@@ -1,33 +1,35 @@
-public class Solution
-{
-    public int[] MaxSlidingWindow(int[] nums, int k)
-    {
-        if (nums.Length == 1)
-        {
-            return nums;
-        }
+public class Solution {
+    public int[] MaxSlidingWindow(int[] nums, int k) {
+        //queue
+
+        //loop l to r
+
+        //pop until small then push
+
+        //if more than window, pop from front and then add first to ans
+
+        LinkedList<int> ll = new LinkedList<int>();
         List<int> ans = new List<int>();
-        var deque = new LinkedList<int>();
 
-        for (int i = 0; i < nums.Length; i++)
-        {
-            while (deque.Count > 0 && deque.First.Value <= i - k)
-            {
-                deque.RemoveFirst();
-            }
-            while (deque.Count > 0 && nums[deque.Last.Value] < nums[i])
-            {
-                deque.RemoveLast();
-            }
-            deque.AddLast(i);
+        int l =0;
+        for(int r = 0;r < nums.Length;r++){
+            int curr = nums[r];
 
-            if (i >= k - 1)
-            {
-                ans.Add(nums[deque.First.Value]);
+            while(ll.Count > 0 && (nums[ll.Last.Value] < curr)){
+                ll.RemoveLast();
+            }
+            ll.AddLast(r);
+
+            if(r >= k-1){
+                while(ll.Count > 0 &&  ll.First.Value < l ){
+                    ll.RemoveFirst();
+                }
+                ans.Add(nums[ll.First.Value]);
+                l++;
+
             }
         }
 
         return ans.ToArray();
-
     }
 }
