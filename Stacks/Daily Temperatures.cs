@@ -1,21 +1,18 @@
 public class Solution {
-    public int[] DailyTemperatures(int[] temp) {
-       int[] res =  new int[temp.Length];
-       Stack<int> st = new Stack<int>();
-       st.Push(0);
-       for(int i = 1;i< temp.Length;i++){
-        if(temp[i] < temp[st.Peek()]){
-            st.Push(i);
-        }
-        else{
-            while( st.Count > 0 && temp[i] > temp[st.Peek()]){
-                int index = st.Pop();
-                res[index] = i - index;
-            }
-            st.Push(i);
-        }
-       } 
+    public int[] DailyTemperatures(int[] arr) {
+        int[] ans = new int[arr.Length];
+        Stack<int> st=  new Stack<int>();
 
-       return res;
+        for(int i=0;i< arr.Length;i++){
+            int curr = arr[i];
+            while(st.Count > 0 && arr[st.Peek()] < curr){
+                int day = st.Pop();
+                ans[day] = i - day; 
+            }
+
+            st.Push(i);
+        }
+
+        return ans;
     }
 }
