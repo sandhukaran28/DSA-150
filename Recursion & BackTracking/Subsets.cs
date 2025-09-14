@@ -1,22 +1,26 @@
 public class Solution
 {
-    List<List<int>> ans = new List<List<int>>();
-    public List<List<int>> Subsets(int[] nums)
+    IList<IList<int>> ans;
+    public IList<IList<int>> Subsets(int[] nums)
     {
-        sol(nums, new List<int>(), 0);
+        ans = new List<IList<int>>();
+        sol(nums, 0, new List<int>());
         return ans;
     }
 
-    public void sol(int[] nums, List<int> curr, int index)
+    public void sol(int[] nums, int index, List<int> ls)
     {
         if (index == nums.Length)
         {
-            ans.Add(curr);
+            ans.Add(new List<int>(ls));
             return;
         }
+        //include
+        ls.Add(nums[index]);
+        sol(nums, index + 1, ls);
 
-        sol(nums, new List<int>(curr), index + 1);
-        curr.Add(nums[index]);
-        sol(nums, curr, index + 1);
+        ls.RemoveAt(ls.Count - 1);
+        sol(nums, index + 1, ls);
+        //backtrack
     }
 }
