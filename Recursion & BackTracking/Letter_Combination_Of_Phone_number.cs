@@ -1,39 +1,36 @@
 public class Solution
 {
-    List<string> ans;
-    public List<string> LetterCombinations(string digits)
+    IList<string> ans = new List<string>();
+    public IList<string> LetterCombinations(string st)
     {
-        ans = new List<string>();
-        sol(digits, 0, "");
+        if (st.Length > 0)
+        {
+            sol(st, 0, new StringBuilder());
+        }
         return ans;
     }
 
-    public void sol(string s, int index, string curr)
+    public void sol(string st, int idx, StringBuilder s)
     {
-        if (index == s.Length)
+        if (idx == st.Length)
         {
-            if (curr.Length > 0)
-            {
-                ans.Add(curr);
-            }
+            ans.Add(s.ToString());
             return;
         }
-
-        int num = s[index] - '0';
-        int skip = (num - 2) * 3;
-        if (num == 8 || num == 9)
+        int n = int.Parse(st.Substring(idx, 1));
+        int start = (n - 2) * 3;
+        if (n > 7)
         {
-            skip++;
+            start++;
         }
-        int count = num == 7 || num == 9 ? 4 : 3;
 
-        char ch = (char)('a' + skip);
+        int count = n == 7 || n == 9 ? 4 : 3;
+
         while (count-- > 0)
         {
-            curr = curr + ch;
-            sol(s, index + 1, curr);
-            curr = curr.Substring(0, curr.Length - 1);
-            ch = (char)(ch + 1);
+            sol(st, idx + 1, s.Append((char)('a' + start)));
+            s.Remove(s.Length - 1, 1);
+            start++;
         }
     }
 }
