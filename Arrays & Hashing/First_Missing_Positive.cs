@@ -2,9 +2,9 @@ public class Solution
 {
     public int FirstMissingPositive(int[] nums)
     {
-        //normalise
         int n = nums.Length;
-        for (int i = 0; i < nums.Length; i++)
+
+        for (int i = 0; i < n; i++)
         {
             if (nums[i] <= 0 || nums[i] > n)
             {
@@ -12,18 +12,14 @@ public class Solution
             }
         }
 
-        //mark -ve
 
         for (int i = 0; i < n; i++)
         {
-            int v = Math.Abs(nums[i]);
-            if (v >= 1 && v <= n)
+            int num = Math.Abs(nums[i]);
+
+            if (num > 0 && num <= n)
             {
-                int idx = v - 1;
-                if (nums[idx] >= 0)
-                {
-                    nums[idx] = -nums[idx];
-                }
+                nums[num - 1] = -Math.Abs(nums[num - 1]);
             }
         }
 
