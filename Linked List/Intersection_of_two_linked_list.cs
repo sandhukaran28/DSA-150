@@ -10,43 +10,21 @@ public class Solution
 {
     public ListNode GetIntersectionNode(ListNode headA, ListNode headB)
     {
-        int count1 = 0, count2 = 0;
+        HashSet<ListNode> hs = new HashSet<ListNode>();
+
         ListNode pointer = headA;
         while (pointer != null)
         {
-            count1++;
+            hs.Add(pointer);
             pointer = pointer.next;
-        }
-        pointer = headB;
-        while (pointer != null)
-        {
-            count2++;
-            pointer = pointer.next;
-        }
-        if (count1 > count2)
-        {
-            int diff = count1 - count2;
-            while (diff-- > 0)
-            {
-                headA = headA.next;
-            }
-        }
-        else if (count2 > count1)
-        {
-            int diff = count2 - count1;
-            while (diff-- > 0)
-            {
-                headB = headB.next;
-            }
         }
 
-        while (headA != null && headB != null)
+        while (headB != null)
         {
-            if (headA == headB)
+            if (hs.Contains(headB))
             {
-                return headA;
+                return headB;
             }
-            headA = headA.next;
             headB = headB.next;
         }
 
