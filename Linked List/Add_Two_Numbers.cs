@@ -9,56 +9,66 @@
  *     }
  * }
  */
-
 public class Solution
 {
     public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
     {
-        int s1 = 0, s2 = 0;
-        ListNode head1 = l1, head2 = l2;
-        while (l1 != null)
+        int n1 = 0, n2 = 0;
+        ListNode head = l1;
+        while (head != null)
         {
-            s1++;
-            l1 = l1.next;
+            n1++;
+            head = head.next;
         }
-        while (l2 != null)
+        head = l2;
+        while (head != null)
         {
-            s2++;
-            l2 = l2.next;
+            n2++;
+            head = head.next;
+        }
+        if (n1 >= n2)
+        {
+            head = l1;
+        }
+        else
+        {
+            head = l2;
         }
 
-        ListNode ans = s1 > s2 ? head1 : head2;
-        l1 = head1;
-        l2 = head2;
-        int carry = 0;
-        while (ans != null)
+        ListNode temp = head;
+        int sum = 0;
+        while (head != null)
         {
-            int sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + carry;
-            carry = 0;
-            ans.val = sum % 10;
-            carry = sum / 10;
-
-            if (ans.next == null)
-            {
-                break;
-            }
-            ans = ans.next;
             if (l1 != null)
             {
+                sum += l1.val;
                 l1 = l1.next;
             }
             if (l2 != null)
             {
+                sum += l2.val;
                 l2 = l2.next;
             }
 
+            head.val = sum % 10;
+            sum = sum / 10;
+            if (head.next != null)
+            {
+                head = head.next;
+            }
+            else
+            {
+                break;
+            }
         }
 
-        if (carry > 0)
+        if (sum > 0)
         {
-            ans.next = new ListNode(carry);
+            head.next = new ListNode(sum);
         }
 
-        return s1 > s2 ? head1 : head2;
+        return temp;
+
+
     }
 }
