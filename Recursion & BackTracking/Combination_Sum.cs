@@ -1,33 +1,36 @@
 public class Solution
 {
-    List<List<int>> ans;
-    public List<List<int>> CombinationSum(int[] nums, int target)
+    IList<IList<int>> ans;
+    public IList<IList<int>> CombinationSum(int[] candidates, int target)
     {
-        ans = new List<List<int>>();
-        sol(nums, 0, target, new List<int>());
+        ans = new List<IList<int>>();
+        sol(candidates, 0, target, new List<int>());
         return ans;
     }
 
-    public void sol(int[] nums, int index, int target, List<int> ls)
+    public void sol(int[] arr, int index, int target, List<int> curr)
     {
 
         if (target == 0)
         {
-            ans.Add(new List<int>(ls));
-            return;
-        }
-        else if (target < 0)
-        {
-            return;
-        }
+            if (!ans.Contains(curr))
+            {
+                ans.Add(new List<int>(curr));
+            }
 
-        if (index == nums.Length)
+            return;
+        }
+        if (target < 0 || index == arr.Length)
         {
             return;
         }
-        ls.Add(nums[index]);
-        sol(nums, index, target - nums[index], ls);
-        ls.RemoveAt(ls.Count - 1);
-        sol(nums, index + 1, target, ls);
+        //subtract current
+        //1 stay on same
+        curr.Add(arr[index]);
+        sol(arr, index, target - arr[index], curr);
+
+        curr.RemoveAt(curr.Count - 1);
+        //skip current
+        sol(arr, index + 1, target, curr);
     }
 }
