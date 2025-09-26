@@ -1,20 +1,18 @@
 public class Solution
 {
-    HashSet<int> cols;
-    HashSet<int> diag1;
-    HashSet<int> diag2;
-    List<List<string>> ans;
-    public List<List<string>> SolveNQueens(int n)
+    HashSet<int> cols = new HashSet<int>();
+    HashSet<int> d1 = new HashSet<int>();
+    HashSet<int> d2 = new HashSet<int>();
+    IList<IList<string>> ans = new List<IList<string>>();
+
+    public IList<IList<string>> SolveNQueens(int n)
     {
-        cols = new HashSet<int>();
-        diag1 = new HashSet<int>();
-        diag2 = new HashSet<int>();
-        ans = new List<List<string>>();
-        sol(n, 0, new List<string>());
+
+        sol(0, n, new List<string>());
         return ans;
     }
 
-    public void sol(int n, int row, List<string> ls)
+    public void sol(int row, int n, IList<string> ls)
     {
 
         if (row == n)
@@ -22,30 +20,42 @@ public class Solution
             ans.Add(new List<string>(ls));
             return;
         }
-        string st = "";
-        for (int col = 0; col < n; col++)
+
+        for (int i = 0; i < n; i++)
         {
-            if (!cols.Contains(col) && !diag1.Contains(row + col) && !diag2.Contains(row - col))
+            if (valid(row, i))
             {
-                string curr = st;
-                curr = curr + 'Q';
-                for (int i = col + 1; i < n; i++)
+                cols.Add(i);
+                d1.Add(row + i);
+                d2.Add(row - i);
+                //string building
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < i; j++)
                 {
-                    curr = curr + '.';
+                    sb.Append('.');
                 }
-                ls.Add(curr);
-                cols.Add(col);
-                diag1.Add(row + col);
-                diag2.Add(row - col);
+                sb.Append('Q');
+                for (int j = i + 1; j < n; j++)
+                {
+                    sb.Append('.');
+                }
 
-                sol(n, row + 1, ls);
-
+                ls.Add(sb.ToString());
+                sol(row + 1, n, ls);
                 ls.RemoveAt(ls.Count - 1);
-                cols.Remove(col);
-                diag1.Remove(row + col);
-                diag2.Remove(row - col);
+                cols.Remove(i);
+                d1.Remove(row + i);
+                d2.Remove(row - i);
             }
-            st = st + '.';
         }
+    }
+
+    public bool valid(int r, int c)
+    {
+        if (!cols.Contains(c) && !d1.Contains(r + c) && !d2.Contains(r - c))
+        {
+            return true;
+        }
+        return false;
     }
 }
