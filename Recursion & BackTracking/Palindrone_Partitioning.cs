@@ -1,36 +1,35 @@
 public class Solution
 {
-    List<List<string>> ans;
-    public List<List<string>> Partition(string s)
+    IList<IList<string>> ans = new List<IList<string>>();
+    public IList<IList<string>> Partition(string s)
     {
-        ans = new List<List<string>>();
-        sol(s, 0, new List<String>());
+        sol(s, 0, new List<string>());
         return ans;
     }
 
+
+    // sol
     public void sol(string s, int l, List<string> ls)
     {
-        if (l == s.Length)
+        if (l >= s.Length)
         {
             ans.Add(new List<string>(ls));
-            return;
         }
-
-        for (int r = l; r < s.Length; r++)
+        for (int i = l; i < s.Length; i++)
         {
-            bool check = checkPalindrone(s, l, r);
-            if (check)
+            string sub = s.Substring(l, i - l + 1);
+            if (isPalindrone(sub, 0, sub.Length - 1))
             {
-                ls.Add(s.Substring(l, r - l + 1));
-                sol(s, r + 1, ls);
+                ls.Add(sub);
+                sol(s, i + 1, ls);
                 ls.RemoveAt(ls.Count - 1);
-
             }
         }
-
     }
 
-    public bool checkPalindrone(string s, int l, int r)
+
+    //check palindrone
+    public bool isPalindrone(string s, int l, int r)
     {
 
         while (l < r)
@@ -41,8 +40,10 @@ public class Solution
             }
             l++;
             r--;
+
         }
 
         return true;
     }
+
 }
