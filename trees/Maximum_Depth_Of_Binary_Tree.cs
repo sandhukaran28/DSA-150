@@ -11,19 +11,19 @@
  *     }
  * }
  */
-
 public class Solution
 {
     public int MaxDepth(TreeNode root)
     {
+
         if (root == null)
         {
             return 0;
         }
 
-        int left = MaxDepth(root.left);
-        int right = MaxDepth(root.right);
+        int left = MaxDepth(root.left) + 1;
+        int right = MaxDepth(root.right) + 1;
 
-        return (int)(Math.Max(left, right) + 1);
+        return Math.Max(left, right);
     }
 }
