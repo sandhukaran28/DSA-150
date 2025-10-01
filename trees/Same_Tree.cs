@@ -11,28 +11,20 @@
  *     }
  * }
  */
-
 public class Solution
 {
-    int max = 0;
-    public int DiameterOfBinaryTree(TreeNode root)
+    public bool IsSameTree(TreeNode p, TreeNode q)
     {
-        int res = sol(root);
-        return max;
-    }
 
-    public int sol(TreeNode root)
-    {
-        if (root == null)
+        if (p == null && q == null)
         {
-            return 0;
+            return true;
         }
-        int left = sol(root.left);
-        int right = sol(root.right);
+        else if (p == null || q == null || p.val != q.val)
+        {
+            return false;
+        }
 
-        max = Math.Max(left + right, max);
-        return Math.Max(left, right) + 1;
-
-
+        return IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
     }
 }
