@@ -11,28 +11,28 @@
  *     }
  * }
  */
-
 public class Solution
 {
-    int max = 0;
+    int ans = 0;
     public int DiameterOfBinaryTree(TreeNode root)
     {
-        int res = sol(root);
-        return max;
+        recursion(root);
+        return ans;
     }
 
-    public int sol(TreeNode root)
+    public int recursion(TreeNode node)
     {
-        if (root == null)
+        if (node == null)
         {
             return 0;
         }
-        int left = sol(root.left);
-        int right = sol(root.right);
 
-        max = Math.Max(left + right, max);
+        int left = recursion(node.left);
+        int right = recursion(node.right);
+
+        ans = Math.Max(left + right, ans);
+
         return Math.Max(left, right) + 1;
-
-
     }
+
 }
