@@ -11,25 +11,33 @@
  *     }
  * }
  */
-
 public class Solution
 {
-    public bool IsValidBST(TreeNode root)
+    public bool IsValidBST(TreeNode node)
     {
-        return sol(root, long.MinValue, long.MaxValue);
-    }
-
-    public bool sol(TreeNode root, long min, long max)
-    {
-        if (root == null)
+        if (node == null)
         {
             return true;
         }
-        if (root.val <= min || root.val >= max)
+
+        return sol(node, long.MinValue, long.MaxValue);
+    }
+
+    public bool sol(TreeNode node, long left, long right)
+    {
+        if (node == null)
+        {
+            return true;
+        }
+
+        if (node.val <= left || node.val >= right)
         {
             return false;
         }
 
-        return sol(root.left, min, root.val) && sol(root.right, root.val, max);
+        return sol(node.left, left, node.val) && sol(node.right, node.val, right);
+
+
+
     }
 }
