@@ -4,11 +4,7 @@
  *     public int val;
  *     public TreeNode left;
  *     public TreeNode right;
- *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
+ *     public TreeNode(int x) { val = x; }
  * }
  */
 
@@ -16,25 +12,25 @@ public class Solution
 {
     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
     {
-        if (root == null)
+        TreeNode curr = root;
+        int pv = p.val;
+        int qv = q.val;
+        while (curr != null)
         {
-            return null;
+            if (p.val < curr.val && q.val < curr.val)
+            {
+                curr = curr.left;
+            }
+            else if (p.val > curr.val && q.val > curr.val)
+            {
+                curr = curr.right;
+            }
+            else
+            {
+                return curr;
+            }
         }
 
-        if (p.val < root.val && q.val < root.val)
-        {
-            return LowestCommonAncestor(root.left, p, q);
-        }
-        else if (p.val > root.val && q.val > root.val)
-        {
-            return LowestCommonAncestor(root.right, p, q);
-        }
-        else if ((p.val < root.val && q.val > root.val) || (p.val > root.val && q.val < root.val))
-        {
-            return root;
-        }
-
-        return root;
-
+        return null;
     }
 }
