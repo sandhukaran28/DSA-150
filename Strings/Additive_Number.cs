@@ -1,81 +1,38 @@
-public class Solution
-{
-    public bool IsAdditiveNumber(string num)
-    {
-        char[] arr = num.ToCharArray();
-        return sol(arr, 0, null, null, 0);
+public class Solution {
+    public bool IsAdditiveNumber(string num) {
+        return sol(0, 0,0,num,0);
     }
 
-    public bool sol(char[] arr, int index, BigInteger? n1, BigInteger? n2, int count)
-    {
+    public bool sol(BigInteger n1, BigInteger n2,int idx,string num,int count){
 
-        int n = arr.Length;
-        //if any of num is null
-
-        if (index == n)
-        {
+        if(idx == num.Length){
             return count >= 3;
         }
 
-        if (n1 == null || n2 == null)
-        {
+            for(int i=idx;i <num.Length;i++){
+                if(num[idx] == '0' && i > idx) break;
 
-            BigInteger val = 0;
-            for (int i = index; i < n; i++)
-            {
-
-                if (arr[index] == '0' && i > index)
-                {
-                    break;
-                }
-                val = (val * 10) + (arr[i] - '0');
-
-                if (n1 == null)
-                {
-                    if (sol(arr, i + 1, val, null, count + 1))
-                    {
-                        return true;
-                    }
-
-                }
-                else
-                {
-                    if (sol(arr, i + 1, n1, val, count + 1))
-                    {
+                BigInteger n3  = BigInteger.Parse(num.Substring(idx,i-idx+1));
+                if(count < 2){
+                if(count == 0){
+                    if(sol(n3, n2,i+1,num,count+1)){
                         return true;
                     }
                 }
+                else{
+                    if(sol(n1, n3,i+1,num,count+1)){
+                        return true;
+                    }
+                }
+                }
+                else{
+                BigInteger add  = BigInteger.Add(n1,n2);
+                 if(add.Equals(n3)){
+                return sol(n2,add,i+1, num,count+1);
             }
-        }
-
-
-        // both nums are present
-        if (n1.HasValue && n2.HasValue)
-        {
-            BigInteger sum = (n1.Value + n2.Value);
-            string str = (n1.Value + n2.Value).ToString();
-
-            if (index + str.Length > arr.Length)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] != arr[index + i])
-                {
-                    return false;
                 }
             }
-
-            n1 = n2;
-            n2 = sum;
-
-            return sol(arr, index + str.Length, n1, n2, count + 1);
-        }
-
+            
         return false;
-
-
     }
 }
